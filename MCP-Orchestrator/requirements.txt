@@ -1,0 +1,14 @@
+aiohttp
+websockets
+aioredis
+python-dotenv
+aiojobs
+openai
+langchain 
+langchain-openai 
+langchain-groq
+groq 
+langchainhub
+langchain-core 
+langchain-community 
+pydantic 

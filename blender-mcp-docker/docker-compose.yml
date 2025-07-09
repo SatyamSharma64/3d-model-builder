@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  blender-mcp:
+    build: .
+    container_name: blender-mcp-container
+    ports:
+      - "5901:5901"  # VNC access
+      - "9876:9876"  # Potential MCP server port
+    volumes:
+      - ./projects:/workspace  # Mount for project files
+      - ./addon.py:/root/.config/blender/4.2/scripts/addons/blender_mcp.py
+    environment:
+      - DISPLAY=:1
+      - LIBGL_ALWAYS_INDIRECT=1
+      - MESA_GL_VERSION_OVERRIDE=3.3
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+    shm_size: 512m  # Increase shared memory for better performance

@@ -1,0 +1,72 @@
+# Use Ubuntu as base image
+FROM ubuntu:22.04
+
+# Avoid interactive prompts during package installation
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    wget \
+    xz-utils \
+    python3 \
+    python3-pip \
+    xvfb \
+    x11vnc \
+    fluxbox \
+    curl \
+    libxkbcommon0 \
+    libxkbcommon-x11-0 \
+    libxrandr2 \
+    libxinerama1 \
+    libxcursor1 \
+    libxi6 \
+    libxss1 \
+    libgconf-2-4 \
+    libxtst6 \
+    libxrandr2 \
+    libxss1 \
+    libasound2 \
+    libatk-bridge2.0-0 \
+    libdrm2 \
+    libxkbcommon0 \
+    libxcomposite1 \
+    libxdamage1 \
+    libxfixes3 \
+    libxss1 \
+    libglu1-mesa \
+    libgl1-mesa-glx \
+    libgl1-mesa-dri \
+    mesa-utils \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set up display
+ENV DISPLAY=:1
+
+# Download and install Blender
+RUN wget -O blender.tar.xz https://download.blender.org/release/Blender4.2/blender-4.2.3-linux-x64.tar.xz \
+    && tar -xf blender.tar.xz \
+    && mv blender-4.2.3-linux-x64 /opt/blender \
+    && ln -s /opt/blender/blender /usr/local/bin/blender \
+    && rm blender.tar.xz
+
+# Create Blender config directory
+RUN mkdir -p /root/.config/blender/4.2/scripts/addons
+
+# Copy the addon file
+COPY addon.py /root/.config/blender/4.2/scripts/addons/blender_mcp.py
+
+# Create startup script
+# COPY startup_script.py /opt/startup_script.py
+
+# Create entrypoint script
+COPY entrypoint.sh /opt/entrypoint.sh
+RUN chmod +x /opt/entrypoint.sh
+
+# Create user preferences template
+COPY userpref.py /opt/userpref.py
+
+# Expose VNC port
+EXPOSE 9876
+
+# Set entrypoint
+ENTRYPOINT ["/opt/entrypoint.sh"]
