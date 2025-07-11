@@ -49,7 +49,7 @@ class MCPConnectionManager:
             return self.client
 
 # Global connection manager
-mcp_manager = MCPConnectionManager("http://localhost:8080")
+mcp_manager = MCPConnectionManager(os.environ.get("BLENDER_SERVER_URL"))
 
 groq_llm = ChatGroq(
     api_key=os.getenv("GROQ_API_KEY"),

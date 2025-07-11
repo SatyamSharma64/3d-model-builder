@@ -144,7 +144,7 @@ export const useSocketCommand = () => {
       return;
     }
 
-    const socket = new WebSocket(`${process.env.WS_URL}${userId}`);
+    const socket = new WebSocket(`${import.meta.env.VITE_WS_URL}${userId}`);
     socketRef.current = socket;
 
     socket.onopen = () => {

@@ -1,10 +1,14 @@
 import asyncio
 import logging
 import json
+import os
 from typing import Optional, Dict, Any, List
 import aiohttp
 import uuid
 import time
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -333,7 +337,7 @@ class MCPHTTPClient:
 async def main():
     """Main function to demonstrate the MCP HTTP client"""
     
-    server_url = "http://localhost:8080"
+    server_url = os.environ.get("BLENDER_SERVER_URL")
     
     client = MCPHTTPClient(server_url)
     

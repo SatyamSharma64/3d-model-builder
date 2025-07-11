@@ -43,11 +43,14 @@ class MCPConnectionManager:
             return self.client
 
 # Global connection manager
-mcp_manager = MCPConnectionManager("http://localhost:8080")
+mcp_manager = MCPConnectionManager(os.environ.get("BLENDER_SERVER_URL"))
 
 
 async def run_agent_loop_direct_groq(prompt: str, user_id: str, project_id: str, job_id: str):
-    client = await mcp_manager.get_client()
+    try:
+        client = await mcp_manager.get_client()
+    except:
+        return "Unable to connect with Blender", None
     tools_raw = await client.list_tools()
     
     # Get strategy message
