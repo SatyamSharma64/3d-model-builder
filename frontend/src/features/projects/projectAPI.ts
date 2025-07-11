@@ -1,11 +1,12 @@
-import axios from "axios";
+import { api } from "@/services/api";
 
-const api = axios.create({
-  baseURL: "http://localhost:4000/api",
-  withCredentials: true,
-});
 
 export async function fetchProjects() {
   const res = await api.get("/projects");
+  return res.data;
+}
+
+export async function createProject(data: any) {
+  const res = await api.post("/projects", data);
   return res.data;
 }

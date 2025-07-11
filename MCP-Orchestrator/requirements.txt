@@ -1,6 +1,8 @@
+fastapi
 aiohttp
 websockets
-aioredis
+# aioredis
+uvicorn
 python-dotenv
 aiojobs
 openai
@@ -12,3 +14,5 @@ langchainhub
 langchain-core 
 langchain-community 
 pydantic 
+psutil
+

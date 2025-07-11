@@ -3,12 +3,16 @@ import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import Sidebar from "./Sidebar";
+import { logout } from "@/features/auth/authSlice";
+import { useDispatch } from "react-redux";
 
 interface NavbarProps {
   onToggleSidebar: () => void;
 }
 
 export default function Navbar({ onToggleSidebar }: NavbarProps) {
+  const dispatch = useDispatch();
+
   return (
     <header className="h-14 px-4 bg-zinc-900 text-white flex items-center justify-between border-b border-zinc-700">
       <div className="flex items-center gap-2">
@@ -42,6 +46,7 @@ export default function Navbar({ onToggleSidebar }: NavbarProps) {
         <Avatar className="h-8 w-8 cursor-pointer">
           <AvatarFallback>U</AvatarFallback>
         </Avatar>
+        <Button variant="ghost" size="sm" onClick={() => dispatch(logout())}>Logout</Button>
       </div>
     </header>
   );

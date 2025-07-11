@@ -144,7 +144,7 @@ export const useSocketCommand = () => {
       return;
     }
 
-    const socket = new WebSocket(`ws://localhost:4003/ws?user_id=${userId}`);
+    const socket = new WebSocket(`${process.env.WS_URL}${userId}`);
     socketRef.current = socket;
 
     socket.onopen = () => {

@@ -22,7 +22,7 @@ router.get("/google/callback", passport.authenticate("google", {
   const user = req.user as any;
   const token = generateToken(user._id);
   res.cookie("token", token, { httpOnly: true, sameSite: "lax" });
-  res.redirect("http://localhost:5173/dashboard");
+  res.redirect(`${process.env.GOOGLE_REDIRECT_URL}`);
 });
 
 export default router;

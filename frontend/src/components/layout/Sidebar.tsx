@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useProjects } from "@/hooks/useProjects";
 import { NavLink, useNavigate } from "react-router-dom";
+import DialogBox from "../project/ProjectDialog";
 
 export default function Sidebar() {
   const { projects } = useProjects();
@@ -30,12 +31,12 @@ export default function Sidebar() {
         </div>
       </ScrollArea>
       <div className="p-4">
-        <Button
+        <DialogBox 
+          trigger = {<Button
           className="w-full"
-          onClick={() => navigate("/new")}
         >
           + New Project
-        </Button>
+        </Button>} />
       </div>
     </aside>
   );

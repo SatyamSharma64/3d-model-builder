@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, type PayloadAction } from "@reduxjs/toolkit";
-import { fetchProjects } from "./projectAPI";
+import { fetchProjects, createProject } from "./projectAPI";
 // import type { Project } from "../../types/project";
 
 interface Project {
@@ -25,6 +25,17 @@ const initialState: ProjectState = {
 };
 
 export const loadProjects = createAsyncThunk("projects/fetchAll", fetchProjects);
+
+export const createNewProject = createAsyncThunk("projects/create", 
+  async (name: string, thunkAPI) => {
+    try{
+      const res = await createProject({name});
+      return res;
+    } catch (error: any){
+      return thunkAPI.rejectWithValue(error?.response?.data?.message || "Project creation failed")
+    }
+  }
+)
 
 const projectSlice = createSlice({
   name: "projects",
@@ -58,6 +69,14 @@ const projectSlice = createSlice({
       .addCase(loadProjects.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message || "Could not load projects";
+      })
+      .addCase(createNewProject.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.projects.push(action.payload);
+      })
+      .addCase(createNewProject.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = (action.payload as string) || "Could not create project";
       });
   },
 });
