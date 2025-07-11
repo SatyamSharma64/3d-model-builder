@@ -1,7 +1,6 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useState, type ReactNode } from "react";
-import { useProjects } from "@/hooks/useProjects";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -19,9 +18,7 @@ interface DialogBoxProps {
 }
 
 export default function DialogBox ({trigger}: DialogBoxProps) {
-  const { projectId } = useParams<{ projectId: string }>();
   const dispatch = useDispatch();
-  const { projects } = useProjects();
   const navigate = useNavigate();
 
   const [dialogOpen, setDialogOpen] = useState(false);

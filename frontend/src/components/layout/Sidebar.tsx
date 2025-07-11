@@ -1,12 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useProjects } from "@/hooks/useProjects";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import DialogBox from "../project/ProjectDialog";
 
 export default function Sidebar() {
   const { projects } = useProjects();
-  const navigate = useNavigate();
 
   return (
     <aside className="w-64 h-full bg-zinc-900 text-white flex flex-col border-r border-zinc-800">

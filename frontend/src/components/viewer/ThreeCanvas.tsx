@@ -60,6 +60,7 @@ function Model({ base64 }: { base64: string }) {
 
 export default function ThreeCanvas({ projectId }: { projectId: string }) {
   const { activeProject } = useProjects();
+  console.log(projectId, projectId==activeProject?._id)
   const previewUrl = activeProject?.previewUrl;
 
   return (

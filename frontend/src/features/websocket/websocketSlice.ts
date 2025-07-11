@@ -25,7 +25,7 @@ const websocketSlice = createSlice({
       state.connected = false;
       state.error = action.payload;
     },
-    messageReceived: (state, action: PayloadAction<any>) => {
+    messageReceived: () => {
       // Message is passed to middleware or component-level selectors
     },
   },

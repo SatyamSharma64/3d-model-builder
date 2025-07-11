@@ -17,7 +17,7 @@ export default function App() {
         console.log("dispatched set user")
       })
       .catch(err => {
-        console.log("User not authenticated");
+        console.log("User not authenticated", err);
         dispatch(logout());
       });
   }, []);
