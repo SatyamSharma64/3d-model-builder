@@ -2,16 +2,16 @@ import express from "express";
 import { registerUser, loginUser, getMe } from "../controllers/authController";
 import { validateRequest } from "../middleware/validateRequest";
 import { registerSchema, loginSchema } from "../validators/authSchemas";
-import { authLimiter } from "../middleware/rateLimiter";
+import { rateLimiter } from "../middleware/rateLimiter";
 // import passport from "passport";
 // import { generateToken } from "../services/auth";
 import { authenticateUser } from "../middleware/auth";
 
 const router = express.Router();
 
-router.post("/register", authLimiter, validateRequest(registerSchema), registerUser);
-router.post("/login", authLimiter, validateRequest(loginSchema), loginUser);
-router.get("/me", authenticateUser, getMe);
+router.post("/register", rateLimiter, validateRequest(registerSchema), registerUser);
+router.post("/login", rateLimiter, validateRequest(loginSchema), loginUser);
+router.get("/me", rateLimiter, authenticateUser, getMe);
 
 // Google OAuth
 // router.get("/google", passport.authenticate("google", { scope: ["profile", "email"] }));
