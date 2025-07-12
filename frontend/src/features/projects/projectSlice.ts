@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, type PayloadAction } from "@reduxjs/toolkit";
-import { fetchProjects, createProject } from "./projectAPI";
-// import type { Project } from "../../types/project";
+import { api } from "@/services/api";
+
 
 interface Project {
   _id: string;
@@ -24,13 +24,22 @@ const initialState: ProjectState = {
   activeProjectId: null,
 };
 
-export const loadProjects = createAsyncThunk("projects/fetchAll", fetchProjects);
+export const loadProjects = createAsyncThunk("projects/fetchAll", 
+  async (_, thunkAPI) => {
+    try {
+      const res = await api.get("/projects", {withCredentials: true});
+      return res.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue("Failed to fetch projects")
+    }
+  }
+);
 
 export const createNewProject = createAsyncThunk("projects/create", 
   async (name: string, thunkAPI) => {
     try{
-      const res = await createProject({name});
-      return res;
+      const res = await api.post("/projects", {name}, {withCredentials: true});
+      return res.data;
     } catch (error: any){
       return thunkAPI.rejectWithValue(error?.response?.data?.message || "Project creation failed")
     }
