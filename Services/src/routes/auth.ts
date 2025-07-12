@@ -2,15 +2,15 @@ import express from "express";
 import { registerUser, loginUser, getMe } from "../controllers/authController";
 import { validateRequest } from "../middleware/validateRequest";
 import { registerSchema, loginSchema } from "../validators/authSchemas";
-import { rateLimiter } from "../middleware/rateLimiter";
+import { authRateLimiter, rateLimiter } from "../middleware/rateLimiter";
 // import passport from "passport";
 // import { generateToken } from "../services/auth";
 import { authenticateUser } from "../middleware/auth";
 
 const router = express.Router();
 
-router.post("/register", rateLimiter, validateRequest(registerSchema), registerUser);
-router.post("/login", rateLimiter, validateRequest(loginSchema), loginUser);
+router.post("/register", authRateLimiter, validateRequest(registerSchema), registerUser);
+router.post("/login", authRateLimiter, validateRequest(loginSchema), loginUser);
 router.get("/me", rateLimiter, authenticateUser, getMe);
 
 // Google OAuth
